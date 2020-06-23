@@ -19,5 +19,46 @@ def read_portfolio(filename):
             portfolio.append(holding)
     return portfolio
 
+def read_prices(filename):
+    'Read prices into dict'
+    prices = dict()
+
+    f = open(filename, 'r')
+    rows = csv.reader(f)
+    try:
+        for name,price in rows:
+            prices[name] = price
+    except ValueError:
+        pass
+    return prices
+
+def make_report(portfolio, prices):
+    'Count changes in report'
+    report = list()
+
+    for name, count, price in portfolio:
+        report.append((name, count, price, float(prices[name])-float(price)))
+
+    return report
+
+from pprint import pprint
+
 portfolio = read_portfolio('Data/portfolio.csv')
-print(portfolio)
+#pprint(portfolio)
+
+prices = read_prices('Data/prices.csv')
+#pprint(prices)
+
+headers = ('Name', 'Shares', 'Price', 'Change')
+separator = ''
+header = ''
+
+for name in headers:
+    header += f'{name:>10s} '
+    #print(f'{name:>10s}', end=' ')
+    separator += (10 * '-') + ' '
+print(f'{header}\n{separator}')
+
+report = make_report(portfolio, prices)
+for r in report:
+    print('%10s %10d %10.2f %10.2f' % r)
