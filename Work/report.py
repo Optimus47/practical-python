@@ -37,7 +37,7 @@ def make_report(portfolio, prices):
     report = list()
 
     for name, count, price in portfolio:
-        report.append((name, count, price, float(prices[name])-float(price)))
+        report.append((name, count, '$'+str(price), float(prices[name])-float(price)))
 
     return report
 
@@ -61,4 +61,6 @@ print(f'{header}\n{separator}')
 
 report = make_report(portfolio, prices)
 for r in report:
-    print('%10s %10d %10.2f %10.2f' % r)
+    #print('%10s %10d %10.2f %10.2f' % r)
+    rep = '%10s %10d %10s %10.2f' % r
+    print(rep)
