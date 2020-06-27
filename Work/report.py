@@ -42,24 +42,25 @@ def make_report(portfolio, prices):
 
     return report
 
-#from pprint import pprint
+def print_report(headers, report):
+    'Print report in a table'
+    header, separator = '', ''
+    for name in headers:
+        header += f'{name:>10s} '
+        separator += (10 * '-') + ' '
+    print(f'{header}\n{separator}')
+
+    for row in report:
+        print('%10s %10d %10s %10.2f' % row)
+
 
 portfolio = read_portfolio('Data/portfoliodate.csv')
-#pprint(portfolio)
 
 prices = read_prices('Data/prices.csv')
-#pprint(prices)
 
 headers = ('Name', 'Shares', 'Price', 'Change')
-separator = ''
-header = ''
-
-for name in headers:
-    header += f'{name:>10s} '
-    separator += (10 * '-') + ' '
-print(f'{header}\n{separator}')
 
 report = make_report(portfolio, prices)
-for r in report:
-    rep = '%10s %10d %10s %10.2f' % r
-    print(rep)
+
+print_report(headers, report)
+
