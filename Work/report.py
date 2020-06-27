@@ -22,15 +22,15 @@ def read_portfolio(filename):
 
 def read_prices(filename):
     'Read prices into dict'
-    prices = dict()
+    prices = {}
 
-    f = open(filename, 'r')
-    rows = csv.reader(f)
-    try:
-        for name,price in rows:
-            prices[name] = price
-    except ValueError:
-        pass
+    with open(filename, 'r') as f:
+        rows = csv.reader(f)
+        try:
+            for name,price in rows:
+               prices[name] = price
+        except ValueError:
+            pass
     return prices
 
 def make_report(portfolio, prices):
