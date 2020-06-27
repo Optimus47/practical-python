@@ -53,14 +53,12 @@ def print_report(headers, report):
     for row in report:
         print('%10s %10d %10s %10.2f' % row)
 
+def portfolio_report(file_portfolio, file_prices):
+    'Top level function'
+    portfolio = read_portfolio(file_portfolio)
+    prices = read_prices(file_prices)
+    headers = ('Name', 'Shares', 'Price', 'Change')
+    report = make_report(portfolio, prices)
+    print_report(headers, report)
 
-portfolio = read_portfolio('Data/portfoliodate.csv')
-
-prices = read_prices('Data/prices.csv')
-
-headers = ('Name', 'Shares', 'Price', 'Change')
-
-report = make_report(portfolio, prices)
-
-print_report(headers, report)
-
+portfolio_report('Data/portfoliodate.csv','Data/prices.csv')
