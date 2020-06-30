@@ -2,10 +2,12 @@
 #
 # Exercise 2.4
 import csv
+from fileparse import parse_csv
 
 def read_portfolio(filename):
     'Read portfolio file into list of dictionaries'
     portfolio = []
+    return parse_csv(filename, select=['name','shares','price'], types=[str,int,float])
 
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
@@ -23,6 +25,7 @@ def read_portfolio(filename):
 def read_prices(filename):
     'Read prices into dict'
     prices = {}
+    return  dict(parse_csv(filename,has_headers=False))
 
     with open(filename, 'r') as f:
         rows = csv.reader(f)

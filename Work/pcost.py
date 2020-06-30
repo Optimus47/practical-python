@@ -4,8 +4,14 @@
 import csv
 import sys
 
+import report
+
 def portfolio_cost(filename):
     total = 0.0
+    for row in report.read_portfolio(filename):
+        total += row['shares'] * row['price']
+    return total
+
 
     with open(filename,'rt') as f:
         rows = csv.reader(f)
