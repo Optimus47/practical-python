@@ -7,6 +7,12 @@ def parse_csv(filename,select=None,types=None,has_headers=True,delimiter=None):
     '''
     Parse a CSV file into a list of records
     '''
+    try:
+        if select and not has_headers:
+            raise RuntimeError("select argument requires column headers")
+    except RuntimeError as e:
+        print("Error:", e)
+        raise
     with open(filename) as f:
         if delimiter:
             rows = csv.reader(f, delimiter=delimiter)
@@ -23,14 +29,18 @@ def parse_csv(filename,select=None,types=None,has_headers=True,delimiter=None):
                 indices = []
 
         records = []
-        for row in rows:
+        for rowno, row in enumerate(rows, start=1):
             if not row:
                 continue
             if has_headers:
                 if indices:
                     row = [ row[index] for index in indices ]
                 if types:
-                    row = [ func(val) for func, val in zip(types, row) ]
+                    try:
+                        row = [ func(val) for func, val in zip(types, row) ]
+                    except ValueError as e:
+                        print(f'Row {rowno}: Couldn\'t convert {row}')
+                        print(f'Row {rowno}: Reason {e}')
                 record = dict(zip(headers, row))
             else:
                 if types:
