@@ -27,11 +27,15 @@ def portfolio_cost(filename):
                 print(f'Row {rowno}: Bad row: {row}')
     return total
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Data/portfolio.csv'
+def main(argv=None):
+    if argv and len(argv) == 2:
+        filename = argv[1]
+    else:
+        filename = 'Data/portfolio.csv'
 
-cost = portfolio_cost(filename)
-print('Total cost', cost)
+    cost = portfolio_cost(filename)
+    print('Total cost', cost)
 
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
